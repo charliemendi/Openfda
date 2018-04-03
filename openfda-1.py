@@ -86,9 +86,17 @@ if __name__ == '__main__':
 
  app.run(host="0.0.0.0",port=8080)
 
-import json
 
-with open('https://api.fda.gov/drug/label.json') as json_file:
+import urllib.request
+
+with open("pagina_web", 'w') as g:
+
+Web = urllib.request.urlopen("https://api.fda.gov/drug/label.json")
+
+for linea in Web.readlines():
+    g.write()
+import json
+with open('pagina_web') as json_file:
     data = json.load(json_file)
     for p in data['results']:
         for d in data["0"]:
