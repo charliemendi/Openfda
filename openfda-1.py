@@ -6,19 +6,25 @@ from flask import request
 
 app = Flask(__name__)
 
-empDB=[
+import urllib
+import json
+with open("pagina_web", 'w') as g:
 
- {
+    eb = urllib.urlopen("https://api.fda.gov/drug/label.json")
 
- 'ip':'212.128.255.155',
+for linea in eb.readlines():
+    g.write(linea)
 
- 'name':'Carlos',
-
- 'title':'Ordenador'
-
- },
-
- ]
+with open('pagina_web') as json_file:
+    data = json.load(json_file)
+    for p in data['results']:
+        for d in data["0"]:
+            print('Propósito del producto: ' + p['purpose'])
+            for c in data["openfda"]:
+                print('id: ' + p['spl_id'])
+                print('Nombre del fabricante: ' + p['manufacturer_name'])
+with open('pagina_web','r') as p:
+    empDB=p.read()
 
 @app.route('/empdb/employee',methods=['GET'])
 
@@ -85,23 +91,3 @@ def deleteEmp(empId):
 if __name__ == '__main__':
 
  app.run(host="0.0.0.0",port=8080)
-
-
-import urllib.request
-
-with open("pagina_web", 'w') as g:
-
-Web = urllib.request.urlopen("https://api.fda.gov/drug/label.json")
-
-for linea in Web.readlines():
-    g.write()
-import json
-with open('pagina_web') as json_file:
-    data = json.load(json_file)
-    for p in data['results']:
-        for d in data["0"]:
-            print('Propósito del producto: ' + p['purpose'])
-            for c in data["openfda"]:
-                print('id: ' + p['spl_id'])
-                print('Nombre del fabricante: ' + p['manufacturer_name'])
-
