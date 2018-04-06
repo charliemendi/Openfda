@@ -1,93 +1,19 @@
-from flask import Flask
-
-from flask import jsonify
-
-from flask import request
-
-app = Flask(__name__)
-
-import urllib
+import http.client
 import json
-with open("pagina_web", 'w') as g:
 
-    eb = urllib.urlopen("https://api.fda.gov/drug/label.json")
+headers = {'User-Agent': 'http-client'}
 
-for linea in eb.readlines():
-    g.write(linea)
+conn = http.client.HTTPSConnection("api.fda.gov")
+conn.request("GET", "/drug/label.json", None, headers)
+r1 = conn.getresponse()
+print(r1.status, r1.reason)
+repos_raw = r1.read().decode("utf-8")
+conn.close()
 
-with open('pagina_web') as json_file:
-    data = json.load(json_file)
-    for p in data['results']:
-        for d in data["0"]:
-            print('Propósito del producto: ' + p['purpose'])
-            for c in data["openfda"]:
-                print('id: ' + p['spl_id'])
-                print('Nombre del fabricante: ' + p['manufacturer_name'])
-with open('pagina_web','r') as p:
-    empDB=p.read()
+repos = json.loads(repos_raw)
 
-@app.route('/empdb/employee',methods=['GET'])
+repo = repos[0]
+print("La id del producto es",["results"][0]["id"],"/n El proposito del producto es",["results"][0]["purpose"],"/n El nombre del fabricante es",["results"][0]["purpose"])
 
-def getAllEmp():
 
-    return jsonify({'emps':empDB})
 
-@app.route('/empdb/employee/<empId>',methods=['GET'])
-
-def getEmp(empId):
-
-    usr = [ emp for emp in empDB if (emp['ip'] == empId) ]
-
-    return jsonify({'emp':usr})
-
-@app.route('/empdb/employee/<empId>',methods=['PUT'])
-
-def updateEmp(empId):
-
-    em = [ emp for emp in empDB if (emp['ip'] == empId) ]
-
-    if 'name' in request.json :
-
-        em[0]['name'] = request.json['name']
-
-    if 'title' in request.json:
-
-        em[0]['title'] = request.json['title']
-
-    return jsonify({'emp':em[0]})
-
-@app.route('/empdb/employee',methods=['POST'])
-
-def createEmp():
-
-    dat = {
-
-    'ip':request.json['ip'],
-
-    'name':request.json['name'],
-
-    'title':request.json['title']
-
-    }
-
-    empDB.append(dat)
-
-    return jsonify(dat)
-
-@app.route('/empdb/employee/<empId>',methods=['DELETE'])
-
-def deleteEmp(empId):
-
-    em = [ emp for emp in empDB if (emp['ip'] == empId) ]
-
-    if len(em) == 0:
-
-       abort(404)
-
-    empDB.remove(em[0])
-
-    return jsonify({'response':'Success'})
-
-if __name__ == '__main__':
-
- app.run(host="0.0.0.0",port=8080)
