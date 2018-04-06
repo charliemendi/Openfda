@@ -12,8 +12,7 @@ conn.close()
 
 repos = json.loads(repos_raw)
 
-repo = repos[0]
-print("La id del producto es",["results"][0]["id"],"/n El proposito del producto es",["results"][0]["purpose"],"/n El nombre del fabricante es",["results"][0]["purpose"])
+print("La id del producto es",repos["results"][0]["id"],"/n El proposito del producto es",repos["results"][0]["purpose"],"/n El nombre del fabricante es",repos["results"][0]["openfda"]["manufacture_name"])
 
 
 
