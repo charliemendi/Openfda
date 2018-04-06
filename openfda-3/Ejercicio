@@ -7,13 +7,6 @@ from flask import request
 app = Flask(__name__)
 
 
-
-
-
-
-
-
-
 import urllib
 import json
 with open("pagina_web", 'w') as g:
