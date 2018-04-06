@@ -11,16 +11,17 @@ repos_raw = r1.read().decode("utf-8")
 conn.close()
 
 repos = json.loads(repos_raw)
-limit=len(repos["meta"]["results"]["total"])#
+limit=repos["meta"]["results"]["total"]
+print(limit)
 Lista=[]
 number=0
-try :
-    while number!=4:
-        for i in range(0,limit):
-            Lista.append(repos["results"][number]["openfda"]["manufacturer_name"])
-        number+=1
-except KeyError:
+
+for i in range(0,limit):
+    try:
+        Lista.append(repos["results"][i]["openfda"]["manufacturer_name"])
+    except KeyError:
         Lista.append("Anonimo")
-print("Los fabricantes son de estas aspirinas:")
-for t in set(Lista):
+        continue
+print("Los fabricantes de estas aspirinas:")
+for t in Lista:
     print(t)
