@@ -34,7 +34,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             headers = {'User-Agent': 'http-client'}
 
             conn = http.client.HTTPSConnection("api.fda.gov")
-            conn.request("GET", "/drug/label.json", None, headers)
+            conn.request("GET", "/drug/label.json?limit=10", None, headers)
             r1 = conn.getresponse()
             print(r1.status, r1.reason)
             repos_raw = r1.read().decode("utf-8")
@@ -43,16 +43,22 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             repos = json.loads(repos_raw)
             n = 0
             List=[]
+            List1=[]
+            List2=[]
             while n != 10:
-                List.append("La id del producto es", repos["results"][0]["id"], " El nombre del producto es",repos["results"][0]["openfda"]["generic_name"], " El tag es",repos["results"][0]["openfda"]["brand_name"])
+                List.append(repos["results"][n]["id"])
+                List1.append(repos["results"][n]["openfda"]["generic_name"])
+                List2.append(repos["results"][n]["openfda"]["brand_name"])
                 n += 1
             contenido= """< !doctypehtml >
                             <html>
                                 <body style = 'background-color: blue' >
                                     <h1> Medicamentos </h2>
-                                    <p> List </p>
+                                    <p> id: %s </p>
+                                    <p> Generic_name: %s </p>
+                                    <p> Brand_name: %s </p>
                                 </body >
-                            </html >"""
+                            </html >"""%(List,List1,List2)
 
         else:
             contenido= """<!doctype html>
