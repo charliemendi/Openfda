@@ -22,6 +22,6 @@ for i in range(0,limit):
     except KeyError:
         Lista.append("Anonimo")
         continue
-print("Los fabricantes de estas aspirinas:")
+print("Los fabricantes de estas aspirinas son:")
 for t in Lista:
     print(t)
