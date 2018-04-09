@@ -42,22 +42,28 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             repos = json.loads(repos_raw)
             n = 0
+            List=[]
             while n != 10:
-                print("La id del producto es", repos["results"][0]["id"], " El nombre del producto es",repos["results"][0]["openfda"]["generic_name"], " El tag es",repos["results"][0]["openfda"]["brand_name"])
+                List.append("La id del producto es", repos["results"][0]["id"], " El nombre del producto es",repos["results"][0]["openfda"]["generic_name"], " El tag es",repos["results"][0]["openfda"]["brand_name"])
                 n += 1
-            < !doctypehtml >
-            <html>
-                <body style = 'background-color: blue' >
-                    <h1> Hola! </h2>
-                    <p> Soy el servidor Azul!!</p>
-                </body >
-            </html >
-        elif self.path == "/datos.jsonte":
-            File = "data.txt"
+            contenido= """< !doctypehtml >
+                            <html>
+                                <body style = 'background-color: blue' >
+                                    <h1> Medicamentos </h2>
+                                    <p> List </p>
+                                </body >
+                            </html >"""
+
         else:
-            File= "ERROR.html"
-        with open(File,"r") as f:
-            contenido = f.read()
+            contenido= """<!doctype html>
+                            <html>
+                               <body style='background-color: red'>
+                                 <h1>Hola!</h2>
+                                 <p>ERROR!!</p>
+                               </body>
+                            </html>"""
+
+
         message = "Hello world! " + self.path + contenido
         # Enviar el mensaaje completo
         self.wfile.write(bytes(message, "utf8"))
