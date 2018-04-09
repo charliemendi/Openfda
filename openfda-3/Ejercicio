@@ -59,7 +59,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                             <html>
                                <body style='background-color: red'>
                                  <h1>ERROR</h2>
-                                 <p>Introduzca /medicamentos</p>
+                                 <p>Introduzca /medicamentos </p>
                                </body>
                             </html>"""
 
