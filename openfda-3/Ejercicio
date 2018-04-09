@@ -45,6 +45,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             while n != 10:
                 print("La id del producto es", repos["results"][0]["id"], " El nombre del producto es",repos["results"][0]["openfda"]["generic_name"], " El tag es",repos["results"][0]["openfda"]["brand_name"])
                 n += 1
+            < !doctypehtml >
             <html>
                 <body style = 'background-color: blue' >
                     <h1> Hola! </h2>
