@@ -58,8 +58,8 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             contenido= """<!doctype html>
                             <html>
                                <body style='background-color: red'>
-                                 <h1>Hola!</h2>
-                                 <p>ERROR!!</p>
+                                 <h1>ERROR</h2>
+                                 <p>Introduzca /medicamentos</p>
                                </body>
                             </html>"""
 
