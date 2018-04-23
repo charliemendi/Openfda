@@ -4,9 +4,26 @@ import http.client
 import json
 from flask import Flask
 app = Flask(__name__)
+@app.route("/")
+def Sin_parametros():
+    archivo ='''<form action="/my-handling-form-page" method = "post">
+                <div>
+                    <label for ="name" > Name:</label>
+                    <input type = "text" id = "name"/>
+                </div>
 
+                <div>
+                    <label for ="limite" > limit:</label>
+                    <input type = "limite" id = "limit"/>
+                </div>
+                <divclass ="button">
+                    <button type = "submit" > Send your message </button>
+                </div>
+            </form>'''
+    return archivo
 @app.route("/listDrugs")
 def listDrugs():
+    number=int(input("Introduzca un numero del 1 al 100:"))
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
     conn.request("GET", "/drug/label.json?limit=10", None, headers)
@@ -33,7 +50,7 @@ def listDrugs():
                                 </html >""" % (List1)
     return contenido
 
-@app.route("/manufacter_name")
+@app.route("/manufacturer_name")
 def manufacturer_name():
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
@@ -62,4 +79,4 @@ def manufacturer_name():
     return contenido2
 
 if __name__ == "__main__":
-        app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=5328)
