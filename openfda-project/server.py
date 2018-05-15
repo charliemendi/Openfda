@@ -24,7 +24,7 @@ def Sin_parametros():
               <input type="submit" value="Fármacos">
                 Limite: <input type="text" name="limit" value="1">
             </form>
-            <form action = "/manufacturer_name" method="get">
+            <form action = "/listCompanies" method="get">
               <input type="submit" value="Empresas">
                 Limite: <input type="text" name="limit" value="1">
             </form>
@@ -93,7 +93,7 @@ def listWarnings():
         n += 1
     contenido = """< !doctypehtml >
                                 <html>
-                                    <body style = 'background-color: blue' >
+                                    <body style = 'background-color: red' >
                                         <h1> Medicamentos </h2>
                                         <p> Advertencias: %s </p>
                                     </body >
@@ -149,14 +149,14 @@ def SearchCompany():
         n += 1
     contenido = """< !doctypehtml >
                                 <html>
-                                    <body style = 'background-color: blue' >
+                                    <body style = 'background-color: green' >
                                         <h1> Medicamentos </h2>
                                         <p> Generic_name: %s </p>
                                     </body >
                                 </html >""" % (List1)
     return contenido
-@app.route("/manufacturer_name")
-def manufacturer_name():
+@app.route("/listCompanies")
+def listCompanies():
     limit = request.args.get("limit")
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
@@ -172,11 +172,11 @@ def manufacturer_name():
         try:
             List2.append(repos["results"][n]["openfda"]["manufacturer_name"])
         except:
-            List1.append("desconocido")
+            List2.append("desconocido")
         n += 1
     contenido2 = """< !doctypehtml >
                                     <html>
-                                        <body style = 'background-color: blue' >
+                                        <body style = 'background-color: green' >
                                             <h1> Nombre de la empresa </h2>
                                             <p> manufacturer_name: %s </p>
                                         </body >
