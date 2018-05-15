@@ -152,7 +152,7 @@ def searchCompany():
                                 <html>
                                     <body style = 'background-color: green' >
                                         <h1> Medicamentos </h2>
-                                        <p> Generic_name: %s </p>
+                                        <p> Company: %s </p>
                                     </body >
                                 </html >""" % (List1)
     return contenido
