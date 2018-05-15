@@ -5,6 +5,7 @@ import json
 from flask import Flask, request, abort, redirect ,url_for
 app = Flask(__name__)
 
+
 @app.route("/redirect")
 def redirect():
     return redirect(url_for("Sin_parametros"))
@@ -32,12 +33,12 @@ def Sin_parametros():
               <input type="submit" value="Advertencias">
                 Limite: <input type="text" name="limit" value="1">
             </form>
-            <form action = "/SearchDrug" method="get">
+            <form action = "/searchDrug" method="get">
               <input type="submit" value="Buscar fármaco">
                 Limite: <input type="text" name="limit" value="1">
                 Campo: <input type="text" name="Principio activo" value="">
             </form>
-            <form action = "/SearchCompany" method="get">
+            <form action = "/searchCompany" method="get">
               <input type="submit" value="Buscar empresas">
                 Limite: <input type="text" name="limit" value="1">
                 Campo: <input type="text" name="Nombre empresaa" value="">
@@ -99,8 +100,8 @@ def listWarnings():
                                     </body >
                                 </html >""" % (List1)
     return contenido
-@app.route("/SearchDrug")
-def SearchDrug():
+@app.route("/searchDrug")
+def searchDrug():
     limit = request.args.get("limit")
     value=request.args.get("Principio activo")
     headers = {'User-Agent': 'http-client'}
@@ -127,8 +128,8 @@ def SearchDrug():
                                     </body >
                                 </html >""" % (List1)
     return contenido
-@app.route("/SearchCompany")
-def SearchCompany():
+@app.route("/searchCompany")
+def searchCompany():
     limit = request.args.get("limit")
     value = request.args.get("Nombre empresaa")
     headers = {'User-Agent': 'http-client'}
