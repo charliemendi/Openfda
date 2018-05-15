@@ -53,6 +53,7 @@ def listDrugs():
 
     repos = json.loads(repos_raw)
     n = 0
+    print(limit)
     List1 = []
     while n != limit:
         try:
@@ -72,7 +73,7 @@ def listDrugs():
 
 @app.route("/SearchDrug")
 def SearchDrug():
-    limit = request.args.get("limit")
+    limit = request.args.get("name")
     value=request.args.get("value")
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
@@ -106,7 +107,7 @@ def SearchDrug():
 
 @app.route("/SearchCompany")
 def SearchCompany():
-    limit = request.args.get("limit")
+    limit = request.args.get("name")
     value = request.args.get("value")
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
@@ -140,7 +141,7 @@ def SearchCompany():
 
 @app.route("/manufacturer_name")
 def manufacturer_name():
-    limit = request.args.get("limit")
+    limit = request.args.get("name")
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
     conn.request("GET", "/drug/label.json?limit=" + limit, None, headers)
@@ -169,4 +170,4 @@ def manufacturer_name():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5399)
+    app.run(host='0.0.0.0', port=5889)
