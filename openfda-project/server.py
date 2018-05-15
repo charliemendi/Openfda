@@ -23,24 +23,24 @@ def Sin_parametros():
             <body>
             <form action = "/listDrugs" method="get">
               <input type="submit" value="Fármacos">
-                Limite: <input type="text" name="limit" value="1">
+                Limite: <input type="text" name="limit" value="10">
             </form>
             <form action = "/listCompanies" method="get">
               <input type="submit" value="Empresas">
-                Limite: <input type="text" name="limit" value="1">
+                Limite: <input type="text" name="limit" value="10">
             </form>
             <form action = "/listWarnings" method="get">
               <input type="submit" value="Advertencias">
-                Limite: <input type="text" name="limit" value="1">
+                Limite: <input type="text" name="limit" value="10">
             </form>
             <form action = "/searchDrug" method="get">
               <input type="submit" value="Buscar fármaco">
-                Limite: <input type="text" name="limit" value="1">
+                Limite: <input type="text" name="limit" value="10">
                 Campo: <input type="text" name="Principio activo" value="">
             </form>
             <form action = "/searchCompany" method="get">
               <input type="submit" value="Buscar empresas">
-                Limite: <input type="text" name="limit" value="1">
+                Limite: <input type="text" name="limit" value="10">
                 Campo: <input type="text" name="Nombre empresaa" value="">
             </form>
             </body>
