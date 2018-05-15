@@ -182,5 +182,7 @@ def listCompanies():
                                         </body >
                                     </html >""" % (List2)
     return contenido2
+socketserver.TCPServer.allow_reuse_address = True
 if __name__ == "__main__":
+
     app.run(host='0.0.0.0', port=8000)
