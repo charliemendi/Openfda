@@ -2,32 +2,34 @@ import http.server
 import socketserver
 import http.client
 import json
-from flask import Flask
+from flask import Flask, request
 app = Flask(__name__)
+
+
 @app.route("/")
 def Sin_parametros():
-    archivo ="""<!DOCTYPE html>
+    archivo = """<!DOCTYPE html>
             <html lang="es">
             <head>
                 <meta charset="UTF-8">
                 <title>OpenFDA-project</title>
             </head>
             <body>
-    
+
             <form action = "/listDrugs" method="get">
-              <input type="submit" value="Listar fármacos">
+              <input type="submit" value="Fármacos">
                 Limite: <input type="text" name="limit" value="1">
             </form>
-    
+
             <form action = "/manufacturer_name" method="get">
-              <input type="submit" value="Listar empresas">
+              <input type="submit" value="Empresas">
             </form>
-    
+
             <form action = "/SearchDrug" method="get">
               <input type="submit" value="Buscar fármaco">
                 Campo: <input type="text" name="Principio activo" value="">
             </form>
-    
+
             <form action = "/SearchCompany" method="get">
               <input type="submit" value="Buscar empresas">
                 Campo: <input type="text" name="Nombre empresaa" value="">
@@ -36,11 +38,14 @@ def Sin_parametros():
             </body>
             </html>"""
     return archivo
+
+
 @app.route("/listDrugs")
 def listDrugs():
+    limit = request.args.get("limit")
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
-    conn.request("GET", "/drug/label.json?limit=10", None, headers)
+    conn.request("GET", "/drug/label.json?limit=" + limit, None, headers)
     r1 = conn.getresponse()
     print(r1.status, r1.reason)
     repos_raw = r1.read().decode("utf-8")
@@ -49,7 +54,7 @@ def listDrugs():
     repos = json.loads(repos_raw)
     n = 0
     List1 = []
-    while n != 10:
+    while n != limit:
         try:
             List1.append(repos["results"][n]["openfda"]["generic_name"])
         except:
@@ -63,11 +68,15 @@ def listDrugs():
                                     </body >
                                 </html >""" % (List1)
     return contenido
+
+
 @app.route("/SearchDrug")
-def listDrugs():
+def SearchDrug():
+    limit = request.args.get("limit")
+    value=request.args.get("value")
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
-    conn.request("GET", "/drug/label.json?limit=10", None, headers)
+    conn.request("GET", "/drug/label.json?limit=" + limit + "&search=active_ingredient" + value, None, headers)
     r1 = conn.getresponse()
     print(r1.status, r1.reason)
     repos_raw = r1.read().decode("utf-8")
@@ -76,7 +85,7 @@ def listDrugs():
     repos = json.loads(repos_raw)
     n = 0
     List1 = []
-    while n != 10:
+    while n != limit:
         try:
             if value == repos["results"][n]["activate_ingredient"]:
                 List1.append(repos["results"][n]["openfda"]["generic_name"])
@@ -93,11 +102,15 @@ def listDrugs():
                                     </body >
                                 </html >""" % (List1)
     return contenido
+
+
 @app.route("/SearchCompany")
-def listDrugs():
+def SearchCompany():
+    limit = request.args.get("limit")
+    value = request.args.get("value")
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
-    conn.request("GET", "/drug/label.json?limit=10", None, headers)
+    conn.request("GET", "/drug/label.json?limit=" + limit + "&search=openfda.manufacturer_name" + value, None, headers)
     r1 = conn.getresponse()
     print(r1.status, r1.reason)
     repos_raw = r1.read().decode("utf-8")
@@ -106,7 +119,7 @@ def listDrugs():
     repos = json.loads(repos_raw)
     n = 0
     List1 = []
-    while n != 10:
+    while n != limit:
         try:
             if value == repos["results"][n]["openfda"]["manufacturer_name"]:
                 List1.append(repos["results"][n]["openfda"]["manufacturer_name"])
@@ -123,11 +136,14 @@ def listDrugs():
                                     </body >
                                 </html >""" % (List1)
     return contenido
+
+
 @app.route("/manufacturer_name")
 def manufacturer_name():
+    limit = request.args.get("limit")
     headers = {'User-Agent': 'http-client'}
     conn = http.client.HTTPSConnection("api.fda.gov")
-    conn.request("GET", "/drug/label.json?limit=10", None, headers)
+    conn.request("GET", "/drug/label.json?limit=" + limit, None, headers)
     r1 = conn.getresponse()
     print(r1.status, r1.reason)
     repos_raw = r1.read().decode("utf-8")
@@ -136,7 +152,7 @@ def manufacturer_name():
     repos = json.loads(repos_raw)
     n = 0
     List2 = []
-    while n != 10:
+    while n != limit:
         try:
             List2.append(repos["results"][n]["openfda"]["manufacturer_name"])
         except:
@@ -150,6 +166,7 @@ def manufacturer_name():
                                         </body >
                                     </html >""" % (List2)
     return contenido2
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5399)
