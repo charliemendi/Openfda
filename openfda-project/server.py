@@ -6,12 +6,7 @@ from flask import Flask, request, abort, redirect ,url_for
 app = Flask(__name__)
 
 
-@app.route("/redirect")
-def redirect():
-    return redirect(url_for("Sin_parametros"))
-@app.route("/secret")
-def secret():
-    abort(401)
+
 @app.route("/")
 def Sin_parametros():
         archivo = """<!DOCTYPE html>
@@ -183,6 +178,12 @@ def listCompanies():
                                         </body >
                                     </html >""" % (List2)
     return contenido2
+@app.route("/redirect")
+def redirect():
+    return redirect(url_for("Sin_parametros"))
+@app.route("/secret")
+def secret():
+    abort(401)
 socketserver.TCPServer.allow_reuse_address = True
 if __name__ == "__main__":
 
