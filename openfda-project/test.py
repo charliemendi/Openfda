@@ -74,6 +74,7 @@ class WebServer(threading.Thread):
             TestOpenFDA.PORT_BUSY = True
             return
 
+
 class TestOpenFDA(unittest.TestCase):
     """ Automatic testing for OpenFDA web server main features """
     WEBSERVER_PROC = None
