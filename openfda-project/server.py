@@ -9,43 +9,59 @@ app = Flask(__name__)
 
 @app.route("/")
 def Sin_parametros():
-        archivo = """<!DOCTYPE html>
-            <html lang="es">
-            <head>
-                <meta charset="UTF-8">
-                <title>OpenFDA-project</title>
-            </head>
-            <body>
-            <form action = "/listDrugs" method="get">
-              <input type="submit" value="Fármacos">
-                Limite: <input type="text" name="limit" value="">
-            </form>
-            <form action = "/listCompanies" method="get">
-              <input type="submit" value="Empresas">
-                Limite: <input type="text" name="limit" value="">
-            </form>
-            <form action = "/listWarnings" method="get">
-              <input type="submit" value="Advertencias">
-                Limite: <input type="text" name="limit" value="">
-            </form>
-            <form action = "/searchDrug" method="get">
-              <input type="submit" value="Buscar fármaco">
-                Limite: <input type="text" name="limit" value="">
-                Campo: <input type="text" name="active_ingredient" value="Aspirin">
-            </form>
-            <form action = "/searchCompany" method="get">
-              <input type="submit" value="Buscar empresas">
-                Limite: <input type="text" name="limit" value="">
-                Campo: <input type="text" name="company" value="Bayer">
-            </form>
-            <form action = "/secret" method="get">
-              <input type="submit" value="secret">
-            </form>
-            <form action = "/redirect" method="get">
-              <input type="submit" value="redirect">
-            </form>
-            </body>
-            </html>"""
+        archivo = """
+            <html>
+                <head>
+                    <title>OpenFDA App</title>
+                </head>
+                <body align=center style='background-color: green'>
+                    <h1>Bienvenido a la pagina principal de la App </h1>
+                    <br>
+                    <form method="get" action="listDrugs">
+                        <input type = "submit" value="Lista Medicamentos">
+                        </input>
+                        <input type="text" name="limit" value="">
+                        </input>
+                    </form>
+                    <br>
+                    <br>
+                    <form method="get" action="searchDrug">
+                        <input type = "submit" value="Buscar Medicamentos">
+                        <input type = "text" name="active_ingredient"></input>
+                        </input>
+                        <input type="text" name="limit" value="">
+                        </input>
+                    </form>
+                    <br>
+                    <br>
+                    <form method="get" action="listCompanies">
+                        <input type = "submit" value="Lista Empresas">
+                        </input>
+                        <input type="text" name="limit" value="">
+                        </input>
+                    </form>
+                    <br>
+                    <br>
+                    <form method="get" action="searchCompany">
+                        <input type = "submit" value="Buscador Empresas">
+                        <input type = "text" name="company"></input>
+                        </input>
+                        <input type="text" name="limit" value="">
+                        </input>
+                    </form>
+                    <br>
+                    <br>
+                    <form method="get" action="listWarnings">
+                        <input type = "submit" value="Lista Advertencias">
+                        </input>
+                        <input type="text" name="limit" value="">
+                        </input>
+                    </form>
+                    <br>
+                    <br>
+                </body>
+            </html>
+                """
         return archivo
 @app.route("/listDrugs")
 def listDrugs():
@@ -65,7 +81,7 @@ def listDrugs():
                         <!doctype html>
                         <html>
                             <body style='background-color: blue' >
-                             <h1> Medicamentos </h2>
+                             <h1> Medicamentos </h1>
                              <p>Generic_name:</p>
                             </body>
                         </html>
@@ -99,7 +115,7 @@ def listWarnings():
                     <html>
                         <body style='background-color: orange' >
                          <h1> Medicamentos </h1>
-                         <p>Advertencias:</p>
+                         <p>Warnings:</p>
                          <ul>{names}</ul>
                          
                         </body>
@@ -138,7 +154,7 @@ def searchDrug():
                             <!doctype html>
                             <html>
                                 <body style='background-color: red' >
-                                 <h1> Medicamentos </h2>
+                                 <h1> Medicamentos </h1>
                                  <p>Generic_name:</p>
                                  <ul>{names}</ul>
                                 </body>
@@ -174,7 +190,7 @@ def searchCompany():
                             <!doctype html>
                             <html>
                                 <body style='background-color: yellow' >
-                                 <h1> Medicamentos </h2>
+                                 <h1> Medicamentos </h1>
                                  <p>Company:</p>
                                  <ul>{company}</ul>
                                 </body>
@@ -212,7 +228,7 @@ def listCompanies():
                     <!doctype html>
                     <html>
                         <body style='background-color: green' >
-                         <h1> Nombre de la empresa </h2>
+                         <h1> Nombre de la empresa </h1>
                          <p>manufacturer_name</p>
                          <ul>{manufacturer_name}<ul>
                         </body>
@@ -238,7 +254,7 @@ def secret():
 @app.route("/redirect")
 def redirect():
     return "", 302, {'location': 'http://localhost:8000'}
-@app.errorhandler(404)
+@app.errorhandler(500)
 def error():
     contenido="""<!doctype html>
                 <html>
@@ -247,7 +263,7 @@ def error():
                      <p><a href="https://localhost:8000">Vuelve al inicio</a></p>
                     </body>
                 </html>"""
-    return render_template(contenido), 404
+    return render_template(contenido), 500
 socketserver.TCPServer.allow_reuse_address = True
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
